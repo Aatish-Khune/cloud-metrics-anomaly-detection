@@ -1,0 +1,27 @@
+# Data is downloaded by `make data` and never committed
+data/
+
+# Experiment tracking and local artifacts
+mlruns/
+mlartifacts/
+reports/*.tmp
+
+# Private interview prep
+INTERVIEW_NOTES.md
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# Secrets
+.env
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
