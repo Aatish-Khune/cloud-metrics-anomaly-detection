@@ -5,6 +5,7 @@ import pytest
 from anomaly.data import (
     MinMaxScaler,
     align_window_scores,
+    informative_features,
     make_windows,
     nab_labels,
     split_train_val,
@@ -57,6 +58,11 @@ def test_scaler_roundtrip_state():
     s2 = MinMaxScaler.from_state(s.state())
     x = np.random.rand(4, 3).astype(np.float32)
     np.testing.assert_allclose(s.transform(x), s2.transform(x))
+
+
+def test_informative_features_drops_constant_columns():
+    train = np.array([[1.0, 0.0], [1.0, 2.0], [1.0, 4.0]], dtype=np.float32)
+    np.testing.assert_array_equal(informative_features(train), [False, True])
 
 
 def test_split_train_val_is_time_ordered():

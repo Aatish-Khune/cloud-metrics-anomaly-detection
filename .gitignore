@@ -3,6 +3,8 @@ data/
 
 # Experiment tracking and local artifacts
 mlruns/
+mlflow.db
+*.log
 mlartifacts/
 reports/*.tmp
 

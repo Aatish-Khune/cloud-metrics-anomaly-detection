@@ -10,7 +10,7 @@ DATA_DIR = ROOT / "data"
 RAW_DIR = DATA_DIR / "raw"
 MODELS_DIR = ROOT / "models"
 REPORTS_DIR = ROOT / "reports"
-MLFLOW_DIR = ROOT / "mlruns"
+MLFLOW_DB = ROOT / "mlflow.db"  # local SQLite tracking store (MLflow 3 default backend)
 
 SEED = 42
 
@@ -56,11 +56,15 @@ class TrainConfig:
     train_stride: int = 2  # stride between training windows (speed)
     val_fraction: float = 0.2  # last part of the training split, used only to pick thresholds
     threshold_quantile: float = 0.99  # label-free threshold: quantile of validation scores
+    adaptive_window: int = 1440  # rolling-threshold history (SMD: 1-minute steps = 1 day)
     if_estimators: int = 200
 
 
 SMD_CONFIG = TrainConfig()
 # NAB series are short (~4k points) and univariate, so use a smaller model.
-NAB_CONFIG = TrainConfig(window=24, hidden=32, epochs=30, batch_size=64, train_stride=1)
+# NAB is sampled every 5 minutes, so 288 steps = 1 day of history for the rolling threshold.
+NAB_CONFIG = TrainConfig(
+    window=24, hidden=32, epochs=30, batch_size=64, train_stride=1, adaptive_window=288
+)
 # NAB convention: the first 15% of each series is a "probationary" period used for learning.
 NAB_TRAIN_FRACTION = 0.15

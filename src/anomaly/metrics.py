@@ -70,7 +70,8 @@ def best_f1_threshold(y_true: np.ndarray, scores: np.ndarray) -> tuple[float, fl
         return float("nan"), 0.0
     precision = tp / (tp + fp)
     recall = tp / total_pos
-    f1 = np.where(precision + recall > 0, 2 * precision * recall / (precision + recall), 0.0)
+    denom = precision + recall
+    f1 = np.divide(2 * precision * recall, denom, out=np.zeros_like(denom), where=denom > 0)
     # Only consider cut points where the score changes, so ties are handled correctly.
     last_of_tie = np.r_[sorted_scores[1:] != sorted_scores[:-1], True]
     f1 = np.where(last_of_tie, f1, -1.0)

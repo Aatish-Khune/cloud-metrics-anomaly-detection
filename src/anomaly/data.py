@@ -94,6 +94,16 @@ class MinMaxScaler:
         return s
 
 
+def informative_features(train: np.ndarray) -> np.ndarray:
+    """Boolean mask of features that vary in the training data.
+
+    A feature that is constant during training gives a model nothing to learn "normal" from,
+    and after scaling any later change in it dominates the anomaly score. Decided from
+    training data only.
+    """
+    return train.std(axis=0) > 0
+
+
 def split_train_val(x: np.ndarray, val_fraction: float) -> tuple[np.ndarray, np.ndarray]:
     """Time-ordered split: the last `val_fraction` of the training data becomes validation."""
     cut = int(len(x) * (1 - val_fraction))

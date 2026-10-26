@@ -1,0 +1,28 @@
+{
+  "smd": {
+    "window": 30,
+    "if_window": 5,
+    "hidden": 64,
+    "epochs": 10,
+    "batch_size": 256,
+    "lr": 0.001,
+    "train_stride": 2,
+    "val_fraction": 0.2,
+    "threshold_quantile": 0.99,
+    "adaptive_window": 1440,
+    "if_estimators": 200
+  },
+  "nab": {
+    "window": 24,
+    "if_window": 5,
+    "hidden": 32,
+    "epochs": 30,
+    "batch_size": 64,
+    "lr": 0.001,
+    "train_stride": 1,
+    "val_fraction": 0.2,
+    "threshold_quantile": 0.99,
+    "adaptive_window": 288,
+    "if_estimators": 200
+  }
+}
