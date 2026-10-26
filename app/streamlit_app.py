@@ -98,10 +98,6 @@ def make_figure(res: dict, feature: int, upto: int) -> go.Figure:
     fig = make_subplots(rows=2, cols=1, shared_xaxes=True, vertical_spacing=0.08,
                         row_heights=[0.55, 0.45],
                         subplot_titles=(f"Metric: {res['features'][feature]}", "Anomaly score"))
-    for start, end in segments(res["labels"][:upto]):
-        for row in (1, 2):
-            fig.add_vrect(x0=x[start], x1=x[end], fillcolor="#d62728", opacity=0.15,
-                          line_width=0, row=row, col=1)
     fig.add_trace(go.Scatter(x=x, y=values, name="metric", line=dict(color="#1f77b4", width=1)),
                   row=1, col=1)
     fig.add_trace(go.Scatter(x=x[alerts], y=values[alerts], mode="markers", name="alert",
@@ -110,6 +106,11 @@ def make_figure(res: dict, feature: int, upto: int) -> go.Figure:
                   row=2, col=1)
     fig.add_trace(go.Scatter(x=x, y=threshold, name="threshold",
                              line=dict(color="#7f7f7f", width=1, dash="dash")), row=2, col=1)
+    # Shapes must be added after the traces: Plotly skips shapes on empty subplots.
+    for start, end in segments(res["labels"][:upto]):
+        for row in (1, 2):
+            fig.add_vrect(x0=x[start], x1=x[end], fillcolor="#d62728", opacity=0.25,
+                          line_width=0, row=row, col=1)
     fig.update_layout(height=560, margin=dict(l=10, r=10, t=40, b=10),
                       legend=dict(orientation="h", y=-0.08))
     return fig
