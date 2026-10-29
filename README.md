@@ -4,7 +4,8 @@
 against an Isolation Forest baseline on labeled data, with a Streamlit app that replays a metric
 stream and raises alerts as it goes.**
 
-> **Live demo:** _coming soon (Streamlit Community Cloud)_ · Run it locally: `python run.py app`
+> **Live demo:** https://cloud-metrics-anomaly.streamlit.app (free tier: if it's asleep, click
+> "wake up" and give it ~30 s) · Run it locally: `python run.py app`
 
 ## Results at a glance
 
