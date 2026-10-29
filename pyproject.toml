@@ -1,6 +1,8 @@
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]
+# Keep pytest's tmp_path folders inside the project (default is the OS temp directory).
+addopts = "--basetemp=.pytest_tmp"
 
 [tool.ruff]
 line-length = 100
